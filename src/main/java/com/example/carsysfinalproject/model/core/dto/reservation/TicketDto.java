@@ -23,6 +23,8 @@ public class TicketDto {
     private LocalTime fromTime;
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime toTime;
+    @JsonFormat(pattern = "HH:mm:ss")
+    private LocalTime addedTime;
     private int slotNumber;
     private String ticketStatus;
     private String carModel;

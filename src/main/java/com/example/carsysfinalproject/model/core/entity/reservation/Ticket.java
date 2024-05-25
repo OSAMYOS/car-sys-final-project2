@@ -42,6 +42,9 @@ public class Ticket {
     @Column(name = "to_time")
     private LocalTime toTime;
 
+    @Column(name = "Added_Time")
+    private LocalTime addedTime;
+
     @Column(name = "slot_number")
     private int slotNumber;
 

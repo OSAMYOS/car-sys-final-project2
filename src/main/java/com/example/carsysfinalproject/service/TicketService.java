@@ -11,6 +11,7 @@ import com.example.carsysfinalproject.model.repo.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -130,6 +131,11 @@ public class TicketService {
             if (ticket.getTicketStatus().equals("Pending")) {
                 ticket.setTicketStatus("Active");
             }else if (ticket.getTicketStatus().equals("Active")) {
+                if (LocalTime.now().isAfter(ticket.getToTime())) {
+                    Duration addedTime = Duration.between(ticket.getToTime(), LocalTime.now());
+                    //System.out.println("The user is overdue by " + formatDuration(addedTime));
+                    ticket.setAddedTime(formatDuration(addedTime));
+                }
                 delete(ticketId);
             }else if (ticket.getTicketStatus().equals("Finished")) {
                 throw new IllegalArgumentException("Ticket not found");
@@ -170,6 +176,13 @@ public class TicketService {
 
     public void deleteAllTickets() {
         ticketDao.deleteAllTickets();
+    }
+
+    private LocalTime formatDuration(Duration duration) {
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.toSeconds() % 60;
+        return LocalTime.of((int) hours, (int) minutes, (int) seconds);
     }
 
 }

@@ -153,6 +153,7 @@ public class TicketDao {
         ticket.setDate(ticketDto.getDate());
         ticket.setFromTime(ticketDto.getFromTime());
         ticket.setToTime(ticketDto.getToTime());
+        ticket.setAddedTime(ticketDto.getAddedTime());
         ticket.setSlotNumber(ticketDto.getSlotNumber());
         ticket.setTicketStatus(ticketDto.getTicketStatus());
         ticket.setCarModel(ticketDto.getCarModel());
@@ -182,6 +183,7 @@ public class TicketDao {
         ticket.setDate(ticketDto.getDate());
         ticket.setFromTime(ticketDto.getFromTime());
         ticket.setToTime(ticketDto.getToTime());
+        ticket.setAddedTime(ticketDto.getAddedTime());
         ticket.setSlotNumber(ticketDto.getSlotNumber());
         ticket.setTicketStatus(ticketDto.getTicketStatus());
         ticket.setCarModel(ticketDto.getCarModel());
@@ -203,6 +205,7 @@ public class TicketDao {
         ticketDto.setDate(ticket.getDate());
         ticketDto.setFromTime(ticket.getFromTime());
         ticketDto.setToTime(ticket.getToTime());
+        ticketDto.setAddedTime(ticket.getAddedTime());
         ticketDto.setSlotNumber(ticket.getSlotNumber());
         ticketDto.setTicketStatus(ticket.getTicketStatus());
         ticketDto.setCarModel(ticket.getCarModel());

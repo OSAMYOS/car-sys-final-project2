@@ -1,6 +1,7 @@
 package com.example.carsysfinalproject.controller;
 
 import com.example.carsysfinalproject.model.core.dto.reservation.TicketDto;
+import com.example.carsysfinalproject.service.TicketSchedulerService;
 import com.example.carsysfinalproject.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private TicketSchedulerService ticketSchedulerService;
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('GUARD')")
     @GetMapping("/all")
@@ -119,6 +123,19 @@ public class TicketController {
         int parkingId = request.getParkingId();
         LocalTime time = request.getTime();
         return ticketService.getBookedSlotNumbers(parkingId, time);
+    }
+
+
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('GUARD')")
+    @PostMapping("/checkPendingTickets")
+    public void checkPendingTickets() {
+        ticketSchedulerService.checkPendingTickets();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('GUARD')")
+    @PostMapping("/updateTicketsForAllUsers")
+    public void updateTicketsForAllUsers() {
+        ticketSchedulerService.updateTicketsForAllUsers();
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('STUDENT')")

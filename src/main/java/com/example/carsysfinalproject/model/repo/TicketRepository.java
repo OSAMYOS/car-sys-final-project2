@@ -4,6 +4,7 @@ import com.example.carsysfinalproject.model.core.entity.reservation.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     List<Ticket> findTicketsByParkingId(int parkingId);
 
-    @Query("SELECT t FROM Ticket t ORDER BY t.date DESC")
+    @Query("SELECT t FROM Ticket t ORDER BY CONCAT(t.date, ' ', t.fromTime) DESC")
     List<Ticket> findAllSortedByDate();
 
     @Query("SELECT t FROM Ticket t ORDER BY t.ticketStatus DESC")
@@ -42,7 +43,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t FROM Ticket t WHERE t.parking.id = :parkingId AND t.fromTime = :time")
     Ticket findTicketByParkingIdAndTime(int parkingId, LocalTime time);
 
-    @Query("SELECT t FROM Ticket t WHERE t.user.id = :userId")
+    @Query("SELECT t FROM Ticket t WHERE t.user.id = :userId order by CONCAT(t.date, ' ', t.fromTime) DESC")
     List<Ticket> getTicketByUserId(int userId);
 
     @Query("SELECT t FROM Ticket t WHERE t.ticketStatus = :active")
@@ -56,4 +57,17 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT t FROM Ticket t WHERE t.fromTime = :fromTime AND t.user.id = :userId")
     Ticket findOverlappingTicket(LocalTime fromTime, int userId);
+
+    @Query("SELECT DISTINCT t.user.id FROM Ticket t WHERE t.ticketStatus = 'Active'")
+    List<Integer> findAllUserIdsWithActiveTickets();
+
+    @Query("SELECT t FROM Ticket t WHERE t.user.id = :userId AND t.ticketStatus = :active")
+    List<Ticket> findByUserIdAndTicketStatus(int userId, String active);
+
+    @Query("SELECT t FROM Ticket t WHERE t.user.id = :userId AND t.fromTime BETWEEN :now AND :nextHour")
+    List<Ticket> findNextHourTicketsForUser(int userId, LocalTime now, LocalTime nextHour);
+
+    @Query("SELECT t FROM Ticket t WHERE t.ticketStatus = :pending AND t.user.id = :userId")
+    List<Ticket> findNextHourPendingTicketsForUser(@Param("pending") String status, @Param("userId") int userId);
+
 }
