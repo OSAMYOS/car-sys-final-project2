@@ -133,6 +133,13 @@ public class TicketDao {
                 .collect(Collectors.toList());
     }
 
+    public List<TicketDto> getAbandonedTickets() {
+        return ticketRepository.findAbandonedTickets("ABANDONED")
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     public List<Integer> getBookedSlotNumbers(int parkingId, LocalTime time) {
         return slotRepository.getBookedSlotNumbers(parkingId, time);
     }

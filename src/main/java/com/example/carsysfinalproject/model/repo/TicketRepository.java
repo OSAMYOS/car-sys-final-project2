@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -54,6 +55,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT t FROM Ticket t WHERE t.ticketStatus = :finished")
     List<Ticket> findFinishedTickets(String finished);
+
+    @Query("SELECT t FROM Ticket t WHERE t.ticketStatus = :abandoned")
+    List<Ticket> findAbandonedTickets(String abandoned);
 
     @Query("SELECT t FROM Ticket t WHERE t.fromTime = :fromTime AND t.user.id = :userId")
     Ticket findOverlappingTicket(LocalTime fromTime, int userId);

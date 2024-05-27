@@ -82,6 +82,12 @@ public class TicketController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('GUARD')")
+    @GetMapping("/getAbandonedTickets")
+    public List<TicketDto> getAbandonedTickets() {
+        return ticketService.getAbandonedTickets();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('GUARD')")
     @GetMapping("/getByParkingName")
     public List<TicketDto> getTicketsSortedByParkingName() {
         return ticketService.getTicketsSortedByParkingName();

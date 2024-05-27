@@ -86,6 +86,10 @@ public class TicketService {
         return ticketDao.getPendingTickets();
     }
 
+    public List<TicketDto> getAbandonedTickets() {
+        return ticketDao.getAbandonedTickets();
+    }
+
     public List<TicketDto> getFinishedTickets() {
         return ticketDao.getFinishedTickets();
     }
@@ -184,5 +188,4 @@ public class TicketService {
         long seconds = duration.toSeconds() % 60;
         return LocalTime.of((int) hours, (int) minutes, (int) seconds);
     }
-
 }
