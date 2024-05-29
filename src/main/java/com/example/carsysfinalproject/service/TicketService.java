@@ -143,6 +143,8 @@ public class TicketService {
                 delete(ticketId);
             }else if (ticket.getTicketStatus().equals("Finished")) {
                 throw new IllegalArgumentException("Ticket not found");
+            }else if (ticket.getTicketStatus().equals("Abandoned")) {
+                throw new IllegalArgumentException("Ticket not found");
             }
             ticketRepository.save(ticket);
         }
@@ -153,6 +155,10 @@ public class TicketService {
     }
 
     public void cancelTicket(int ticketId) {
+        Ticket ticket = ticketRepository.findByTicketId(ticketId);
+        Slot slot = ticket.getSlot();
+        Parking parking = slot.getParking();
+        parking.setNumberOfAvailableSlot(parking.getNumberOfAvailableSlot() + 1);
         ticketDao.delete(ticketId);
     }
 

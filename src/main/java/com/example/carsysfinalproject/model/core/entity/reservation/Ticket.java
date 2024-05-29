@@ -57,7 +57,7 @@ public class Ticket {
     @Column(name = "car_color")
     private String carColor;
 
-    @Column(name = "car_plate_number")
+    @Column(name = "car_plate_number", unique = true)
     private String carPlateNumber;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

@@ -19,7 +19,7 @@ public class DataInitializer {
             userDto.setId(1);
             userDto.setFirstName("Osama");
             userDto.setLastName("Abdallah");
-            userDto.setEmail("osamaalali788@gmail.com");
+            userDto.setEmail("admin@ju.edu.jo");
             userDto.setPassword("12345678");
             userDto.setPhoneNumber("0778926680");
             userDto.setUserRole("ADMIN");

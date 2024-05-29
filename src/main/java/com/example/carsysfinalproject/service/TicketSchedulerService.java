@@ -15,7 +15,8 @@ public class TicketSchedulerService {
     @Autowired
     private TicketRepository ticketRepository;
 
-    @Scheduled(cron = "0 0 * * * *")
+    // @Scheduled(fixedDelay = 900000) -> 15 minutes
+    @Scheduled(fixedDelay = 10000) // 10 seconds
     public void checkPendingTickets() {
         List<Ticket> pendingTickets = ticketRepository.findPendingTickets("Pending");
         LocalTime now = LocalTime.now();
@@ -49,9 +50,7 @@ public class TicketSchedulerService {
                         Ticket nextTicket = nextHourTickets.get(0);
 
                         currentTicket.setTicketStatus("Finished");
-                        ticketRepository.save(currentTicket);
                         nextTicket.setTicketStatus("Active");
-                        ticketRepository.save(nextTicket);
 
                         System.out.println("Ticket " + currentTicket.getTicketId() + " has been finished.");
                         System.out.println("Ticket " + nextTicket.getTicketId() + " has been activated.");
